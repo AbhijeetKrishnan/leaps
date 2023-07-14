@@ -8,7 +8,7 @@ import numpy as np
 import ply.lex as lex
 from functools import wraps
 
-from third_party import yacc
+from .third_party import yacc
 
 MIN_INT = 0
 MAX_INT = 19

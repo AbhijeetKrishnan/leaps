@@ -48,7 +48,7 @@ class Karel_world(object):
 
     def set_new_state(self, s, metadata=None):
         self.perception_count = 0
-        self.s = s.astype(np.bool)
+        self.s = s.astype(np.bool_)
         self.s_h = [self.s.copy()]
         self.a_h = []
         self.h = self.s.shape[0]

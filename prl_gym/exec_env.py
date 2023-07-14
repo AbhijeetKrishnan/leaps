@@ -16,13 +16,13 @@ import time
 import numpy as np
 import collections
 from multiprocessing import Pool
-import gym
+import gymnasium as gym
 import prl_gym
 
 from karel_env import karel
 from karel_env.dsl import get_DSL
 from karel_env.dsl.dsl_parse import parse
-from dsl.dsl_parse_and_trace import parse_and_trace
+from karel_env.dsl.dsl_parse_and_trace import parse_and_trace
 from karel_env.generator import KarelStateGenerator
 
 
@@ -454,7 +454,8 @@ class ExecEnv2(ExecEnv):
         r_h_list = []
         pred_program = {}
 
-        program_str = self.dsl.intseq2str(program_seq)
+        # program_str = self.dsl.intseq2str(program_seq)
+        program_str = program_seq
         exe, s_exe = parse(program_str, environment=self.config.env_name)
         if not s_exe or not len(program_seq) > 4:
             # can't execute the program or it's a dummy program: DEF run m()m

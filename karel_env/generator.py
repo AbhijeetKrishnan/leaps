@@ -11,9 +11,9 @@ import pickle
 
 import numpy as np
 
-from dsl import get_DSL
-from dsl.dsl_parse_and_trace import parse_and_trace
-from util import log
+from .dsl import get_DSL
+from .dsl.dsl_parse_and_trace import parse_and_trace
+from .util import log
 
 import karel
 

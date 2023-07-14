@@ -1,7 +1,7 @@
-import numpy as np
 from collections import defaultdict
+import numpy as np
 
-import dsl_data
+from . import dsl_data
 
 
 def check_and_apply(queue, rule):

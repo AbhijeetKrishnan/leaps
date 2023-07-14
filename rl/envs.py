@@ -4,7 +4,7 @@ sys.path.insert(0, "./rl/")
 sys.path.insert(0, "./prl_gym/")
 sys.path.insert(0, "./karel_env/dsl/")
 
-import gym
+import gymnasium as gym
 import numpy as np
 import torch
 from gym.spaces.box import Box

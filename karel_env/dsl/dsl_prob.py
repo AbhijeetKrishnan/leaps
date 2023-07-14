@@ -6,8 +6,8 @@ Code is adapted from https://github.com/carpedm20/karel
 
 import numpy as np
 
-from dsl_base import DSLBase, MIN_INT, MAX_INT, INT_PREFIX
-from dsl_data import DSLData
+from .dsl_base import DSLBase, MIN_INT, MAX_INT, INT_PREFIX
+from .dsl_data import DSLData
 
 
 class DSLProb(DSLBase, DSLData):
