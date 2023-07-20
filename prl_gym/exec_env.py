@@ -457,7 +457,7 @@ class ExecEnv2(ExecEnv):
         # program_str = self.dsl.intseq2str(program_seq)
         program_str = program_seq
         exe, s_exe = parse(program_str, environment=self.config.env_name)
-        if not s_exe or not len(program_seq) > 4:
+        if not s_exe: # or not len(program_seq) > 4:
             # can't execute the program or it's a dummy program: DEF run m()m
             syntax = False
 

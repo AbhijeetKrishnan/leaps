@@ -11,3 +11,4 @@ train_dir
 trained_models/
 wandb/
 *.DS_Store
+data/
