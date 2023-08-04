@@ -446,7 +446,7 @@ class ExecEnv2(ExecEnv):
         self._world.set_new_state(self.init_states[0][0])
         #self._world.print_state()
 
-    def execute_pred_program(self, program_seq):
+    def execute_pred_program(self, program_seq, is_program_str=False):
         self._world.clear_history()
         h, w, c = self._world.s_h[0].shape
         s_h_list = []
@@ -454,8 +454,10 @@ class ExecEnv2(ExecEnv):
         r_h_list = []
         pred_program = {}
 
-        # program_str = self.dsl.intseq2str(program_seq)
-        program_str = program_seq
+        if not is_program_str:
+            program_str = self.dsl.intseq2str(program_seq)
+        else:
+            program_str = program_seq
         exe, s_exe = parse(program_str, environment=self.config.env_name)
         if not s_exe: # or not len(program_seq) > 4:
             # can't execute the program or it's a dummy program: DEF run m()m
@@ -553,9 +555,9 @@ class ExecEnv2(ExecEnv):
 
         return pred_program
 
-    def reward(self, pred_program_seq):
+    def reward(self, pred_program_seq, is_program_str=False):
         """Reward for synthesized programmatic policy (predicted program)"""
-        pred_program = self.execute_pred_program(pred_program_seq)
+        pred_program = self.execute_pred_program(pred_program_seq, is_program_str)
         reward = pred_program['mean_reward']
         return reward, pred_program
 
