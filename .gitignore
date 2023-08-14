@@ -12,3 +12,4 @@ trained_models/
 wandb/
 *.DS_Store
 data/
+.venv/
