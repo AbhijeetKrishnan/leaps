@@ -6,7 +6,6 @@ import h5py
 import os
 import argparse
 import progressbar
-import random
 import pickle
 
 import numpy as np
@@ -20,7 +19,7 @@ import karel
 
 class KarelStateGenerator(object):
     def __init__(self, seed=None):
-        self.rng = np.random.RandomState(seed)
+        self.rng = np.random.default_rng(seed)
 
     def print_state(self, state=None):
         agent_direction = {0: 'N', 1: 'E', 2: 'S', 3: 'W'}
@@ -124,7 +123,7 @@ class KarelStateGenerator(object):
 
         # place 10 Markers
         expected_marker_positions = list(expected_marker_positions)
-        random.shuffle(expected_marker_positions)
+        self.rng.shuffle(expected_marker_positions)
         assert len(expected_marker_positions) >= 10
         marker_positions = []
         for i, mpos in enumerate(expected_marker_positions):
@@ -174,7 +173,7 @@ class KarelStateGenerator(object):
             s[1:h-1, 1:w-1, 6] = True
         else:
             valid_marker_pos = np.array([(r,c) for r in range(1,h-1) for c in range(1,w-1)])
-            marker_pos = valid_marker_pos[np.random.choice(len(valid_marker_pos), size=int(marker_prob*len(valid_marker_pos)), replace=False)]
+            marker_pos = valid_marker_pos[self.rng.choice(len(valid_marker_pos), size=int(marker_prob*len(valid_marker_pos)), replace=False)]
             for pos in marker_pos:
                 s[pos[0], pos[1], 6] = True
 
@@ -224,7 +223,7 @@ class KarelStateGenerator(object):
         while len(stack) > 0:
             cur_pos = stack.pop()
             neighbor_list = get_neighbors(cur_pos, h, w)
-            random.shuffle(neighbor_list)
+            self.rng.shuffle(neighbor_list)
             for neighbor in neighbor_list:
                 if not visited[neighbor[0], neighbor[1]]:
                     stack.append(cur_pos)
