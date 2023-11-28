@@ -13,3 +13,4 @@ wandb/
 *.DS_Store
 data/
 .venv/
+venv/
