@@ -25,8 +25,8 @@ We evaluate our model on a set of sparse-reward Karel environments---commonly us
 - Install [`mamba`](https://github.com/conda-forge/miniforge), create a virtual environment, activate it and install the requirements in [`requirements.txt`](requirements.txt).
 
 ```
-mamba create --prefix ./venv python=3.6 pip
-mamba activate ./venv
+mamba create --prefix ./.venv python=3.6 pip
+mamba activate ./.venv
 pip install -r requirements.txt
 ```
 
