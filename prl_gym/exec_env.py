@@ -1,28 +1,27 @@
 """
 This file defines functions for rewarding a synthesized programmatic policy
 """
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
+from __future__ import absolute_import, division, print_function
 
+import math
 import os
 import sys
-import math
 
 sys.path.insert(0, '.')
 sys.path.insert(0, 'karel_env')
 
-import time
-import numpy as np
 import collections
+import time
 from multiprocessing import Pool
-import gymnasium as gym
-import prl_gym
 
+import gymnasium as gym
+import numpy as np
+from dsl.dsl_parse_and_trace import parse_and_trace
+
+import prl_gym
 from karel_env import karel
 from karel_env.dsl import get_DSL
 from karel_env.dsl.dsl_parse import parse
-from karel_env.dsl.dsl_parse_and_trace import parse_and_trace
 from karel_env.generator import KarelStateGenerator
 
 
@@ -444,6 +443,7 @@ class ExecEnv2(ExecEnv):
         else:
             raise NotImplementedError('yet to implement')
         self._world.set_new_state(self.init_states[0][0])
+        #self._world.print_state()
 
     def execute_pred_program(self, program_seq, is_program_str=False):
         self._world.clear_history()

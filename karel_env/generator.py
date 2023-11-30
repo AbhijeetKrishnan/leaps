@@ -38,7 +38,7 @@ class KarelStateGenerator(object):
     def generate_single_state(self, h=8, w=8, wall_prob=0.1, env_task_metadata={}):
         s = np.zeros([h, w, 16]) > 0
         # Wall
-        s[:, :, 4] = self.rng.rand(h, w) > 1 - wall_prob
+        s[:, :, 4] = self.rng.random((h, w)) > 1 - wall_prob
         s[0, :, 4] = True
         s[h-1, :, 4] = True
         s[:, 0, 4] = True
@@ -52,7 +52,7 @@ class KarelStateGenerator(object):
                 valid_loc = True
                 s[y, x, self.rng.integers(0, 4)] = True
         # Marker: num of max marker == 1 for now
-        s[:, :, 6] = (self.rng.rand(h, w) > 0.9) * (s[:, :, 4] == False) > 0
+        s[:, :, 6] = (self.rng.random((h, w)) > 0.9) * (s[:, :, 4] == False) > 0
         s[:, :, 5] = 1 - (np.sum(s[:, :, 6:], axis=-1) > 0) > 0
         assert np.sum(s[:, :, 5:]) == h*w, np.sum(s[:, :, :5])
         marker_weight = np.reshape(np.array(range(11)), (1, 1, 11))
@@ -508,7 +508,7 @@ def generator(config):
                     exec_ratio = _branch_execution_ratio(record_dict)
 
                     if len(karel_world.s_h) <= config.max_demo_length and \
-                            (len(karel_world.s_h) >= config.min_demo_length or (exec_ratio is not None and (exec_ratio > prev_exec_ratio or (exec_ratio == 1.0 and np.random.uniform() < 0.5)))) and \
+                            (len(karel_world.s_h) >= config.min_demo_length or (exec_ratio is not None and (exec_ratio > prev_exec_ratio or (exec_ratio == 1.0 and s_gen.rng.uniform() < 0.5)))) and \
                             (exec_ratio is None or exec_ratio > prev_exec_ratio or exec_ratio >= 1.0):
                         s_h_list.append(np.stack(karel_world.s_h, axis=0))
                         a_h_list.append(np.array(karel_world.a_h))
