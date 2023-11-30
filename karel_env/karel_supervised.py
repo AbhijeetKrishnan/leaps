@@ -162,7 +162,7 @@ class Karel_world_supervised(object):
         self.num_actions = len(action_table)
 
     def set_new_state(self, s):
-        self.s = s.copy().astype(np.bool)
+        self.s = s.copy().astype(np.bool_)
         self.h = self.s.shape[-3]
         self.w = self.s.shape[-2]
 

@@ -72,7 +72,7 @@ class ExecEnv(object):
         if mode == 'init_states':
             return [x[0] for x in self.init_states]
         else:
-            return self._world.render(mode)
+            return self._world.render(mode=mode)
 
 
 class ExecEnv1(ExecEnv):

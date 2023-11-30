@@ -2,8 +2,8 @@ import numpy as np
 import os
 os.environ.setdefault('PATH', '')
 from collections import deque
-import gym
-from gym import spaces
+import gymnasium as gym
+from gymnasium import spaces
 import cv2
 cv2.ocl.setUseOpenCL(False)
 from .wrappers import TimeLimit

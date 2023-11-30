@@ -7,7 +7,7 @@ sys.path.insert(0, "./karel_env/dsl/")
 import gymnasium as gym
 import numpy as np
 import torch
-from gym.spaces.box import Box
+from gymnasium.spaces.box import Box
 
 from baselines import bench
 from baselines.common.atari_wrappers import make_atari, wrap_deepmind
@@ -84,7 +84,7 @@ def make_env(env_id, seed, rank, log_dir, allow_early_resets, custom_env=False, 
         env._max_episode_steps = custom_kwargs['config'].max_episode_steps
 
         # set seed
-        env.seed(seed + rank)
+        env.action_space.seed(seed + rank)
 
         # log dir
         if log_dir is not None:

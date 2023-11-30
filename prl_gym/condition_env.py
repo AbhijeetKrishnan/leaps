@@ -1,5 +1,5 @@
-import gym
-from gym import spaces
+import gymnasium as gym
+from gymnasium import spaces
 
 class ConditionEnvGym(gym.Env):
     """Custom Environment that follows gym interface"""
@@ -49,7 +49,7 @@ class ConditionEnvGym(gym.Env):
         if mode == 'init_states':
             return [x[0] for x in self.init_states]
         else:
-            return self._world.render(mode)
+            return self._world.render(mode=mode)
 
     def close (self):
         raise NotImplementedError()

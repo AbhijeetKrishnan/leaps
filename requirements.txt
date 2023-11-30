@@ -12,3 +12,6 @@ progressbar
 torch
 torchvision
 scipy
+opencv-python
+tensorboard
+packaging

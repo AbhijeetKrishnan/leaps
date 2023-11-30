@@ -20,12 +20,12 @@ We evaluate our model on a set of sparse-reward Karel environments---commonly us
 
 ## Getting Started
 
-- [Python 3.6](https://www.python.org/downloads/release/python-360/)
-- [PyTorch 1.4.0](https://pytorch.org/get-started/previous-versions/#v140)
+- [Python 3.11](https://www.python.org/downloads/release/python-3116/)
+- [PyTorch 2.1.1](https://pytorch.org/get-started/locally/)
 - Install [`mamba`](https://github.com/conda-forge/miniforge), create a virtual environment, activate it and install the requirements in [`requirements.txt`](requirements.txt).
 
 ```
-mamba create --prefix ./.venv python=3.6 pip
+mamba create --prefix ./.venv python=3.11 pip
 mamba activate ./.venv
 pip install -r requirements.txt
 ```

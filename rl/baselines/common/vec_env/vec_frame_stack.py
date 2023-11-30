@@ -1,6 +1,6 @@
 from .vec_env import VecEnvWrapper
 import numpy as np
-from gym import spaces
+from gymnasium import spaces
 
 
 class VecFrameStack(VecEnvWrapper):

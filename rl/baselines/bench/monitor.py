@@ -1,6 +1,6 @@
 __all__ = ['Monitor', 'get_monitor_files', 'load_results']
 
-from gym.core import Wrapper
+from gymnasium.core import Wrapper
 import time
 from glob import glob
 import csv

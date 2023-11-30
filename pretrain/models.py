@@ -6,7 +6,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from torch.autograd import Variable
-import gym
+import gymnasium as gym
 
 from karel_env.tool.syntax_checker import PySyntaxChecker
 from karel_env.karel_supervised import Karel_world_supervised
@@ -18,7 +18,7 @@ from rl.utils import masked_mean, masked_sum, create_hook, init
 
 class Flatten(nn.Module):
     def forward(self, x):
-        return x.view(x.size(0), -1)
+        return torch.reshape(x, (x.size(0), -1))
 
 #TODO: replace _unmask_idx with _unmask_idx2 after verifying identity
 def _unmask_idx(output_mask_all, first_end_token_idx, max_program_len):
