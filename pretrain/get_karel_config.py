@@ -1,7 +1,7 @@
 import json
 import os
 
-# os.chdir(os.path.join(os.getcwd(), 'leaps'))
+BASE = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 
 from .customargparse import flatten_keys, args_to_dict
 from fetch_mapping import fetch_mapping
@@ -37,7 +37,7 @@ def get_karel_task_config(karel_task: str):
     flattened_config_obj.use_simplified_dsl = config['dsl']['use_simplified_dsl']
     flattened_config_obj.task_definition = config['rl']['envs']['executable']['task_definition']
     flattened_config_obj.execution_guided = config['rl']['policy']['execution_guided']
-    _, _, flattened_config_obj.dsl_tokens, _ = fetch_mapping('mapping_karel2prl.txt')
+    _, _, flattened_config_obj.dsl_tokens, _ = fetch_mapping(os.path.join(BASE, 'mapping_karel2prl.txt'))
     flattened_config_obj.use_simplified_dsl = False
 
     unflattened_config_dict = args_to_dict(flattened_config_obj)
