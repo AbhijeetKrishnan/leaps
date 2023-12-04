@@ -212,7 +212,7 @@ class ExecEnv1(ExecEnv):
                 else:
                     exec_ratio = _branch_execution_ratio(record_dict)
                     if len(self._world.s_h) <= config.max_demo_length and \
-                            (len(self._world.s_h) >= config.min_demo_length or (exec_ratio is not None and (exec_ratio > prev_exec_ratio or (exec_ratio == 1.0 and np.random.uniform() < 0.5 and len(self._world.s_h) >= 2)))) and \
+                            (len(self._world.s_h) >= config.min_demo_length or (exec_ratio is not None and (exec_ratio > prev_exec_ratio or (exec_ratio == 1.0 and self.s_gen.rng.uniform() < 0.5 and len(self._world.s_h) >= 2)))) and \
                             (exec_ratio is None or exec_ratio > prev_exec_ratio or exec_ratio >= 1.0):
                         s_h_list.append(np.stack(self._world.s_h, axis=0))
                         a_h_list.append(np.array(self._world.a_h))

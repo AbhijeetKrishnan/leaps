@@ -30,7 +30,7 @@ class DSLBase(object):
         self.prodnames = self.grammar.Prodnames
         self.call_counter = [0]
         self.max_func_call = 220
-        self.rng = np.random.RandomState(seed)
+        self.rng = np.random.default_rng(seed)
 
         self.construct_vocab()
 

@@ -62,7 +62,7 @@ class DSLProb(DSLBase, DSLData):
     def random_INT(self):
         return "{}{}".format(
             INT_PREFIX,
-            self.rng.randint(MIN_INT, MAX_INT + 1))
+            self.rng.integers(MIN_INT, MAX_INT + 1))
 
     def t_error(self, t):
         self.error = True
