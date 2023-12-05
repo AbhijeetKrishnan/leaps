@@ -12,9 +12,7 @@ from pretrain.get_karel_config import get_karel_task_config
 
 
 def get_reward(program_text, seed, task):
-    mdp_config = get_karel_task_config(task)
-    mdp_config['seed'] = seed
-    mdp_config['args'].seed = seed
+    mdp_config = get_karel_task_config(task, seed)
 
     program = program_text.replace('\\', '').replace('\'', '')
     
@@ -23,7 +21,7 @@ def get_reward(program_text, seed, task):
 
     custom = True if "karel" or "CartPoleDiscrete" in cfg_envs['executable']['name'] else False
     test_env = make_vec_envs(cfg_envs['executable']['name'], mdp_config['seed'], 1,
-                                cfg_rl['gamma'], '.', mdp_config['device'], False,
+                                cfg_rl['gamma'], 'pretrain/output_dir', mdp_config['device'], False,
                                 custom_env=custom, custom_env_type='program', custom_kwargs={'config': mdp_config['args']})
     test_env.reset()
 
