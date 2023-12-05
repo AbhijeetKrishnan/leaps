@@ -21,7 +21,7 @@ def get_reward(program_text, seed, task):
 
     custom = True if "karel" or "CartPoleDiscrete" in cfg_envs['executable']['name'] else False
     test_env = make_vec_envs(cfg_envs['executable']['name'], mdp_config['seed'], 1,
-                                cfg_rl['gamma'], 'pretrain/output_dir', mdp_config['device'], False,
+                                cfg_rl['gamma'], '/tmp', mdp_config['device'], False,
                                 custom_env=custom, custom_env_type='program', custom_kwargs={'config': mdp_config['args']})
     test_env.reset()
 

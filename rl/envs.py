@@ -1,8 +1,8 @@
 import os
 import sys
-sys.path.insert(0, "./rl/")
-sys.path.insert(0, "./prl_gym/")
-sys.path.insert(0, "./karel_env/dsl/")
+sys.path.insert(0, os.path.dirname(os.path.realpath(__file__)))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'prl_gym'))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'karel_env', 'dsl'))
 
 import gymnasium as gym
 import numpy as np

@@ -12,7 +12,6 @@ progressbar2
 torch
 torchvision
 scipy
-opencv-python
 tensorboard
 packaging
 ipykernel
