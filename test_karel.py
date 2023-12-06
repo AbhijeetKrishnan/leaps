@@ -11,9 +11,7 @@ from rl.envs import make_vec_envs
 from pretrain.get_karel_config import get_karel_task_config
 
 
-def get_reward(program_text, seed, task):
-    mdp_config = get_karel_task_config(task, seed)
-
+def get_reward(program_text, mdp_config):
     program = program_text.replace('\\', '').replace('\'', '')
     
     cfg_rl = mdp_config['rl']
@@ -37,8 +35,9 @@ def main():
     program_text = 'DEF run m( IFELSE c( frontIsClear c) i( move turnRight i) ELSE e( WHILE c( rightIsClear c) w( pickMarker w) e) IF c( frontIsClear c) i( move putMarker i) m)'
     seed = 100
     task = 'topOff'
+    mdp_config = get_karel_task_config(task, seed)
 
-    reward = main(program_text, seed, task)
+    reward = main(program_text, mdp_config)
 
     print(reward)
 

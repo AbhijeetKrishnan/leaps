@@ -1,9 +1,12 @@
 import json
 import os
+import sys
 
 BASE = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
+sys.path.insert(0, BASE)
+sys.path.insert(0, os.path.dirname(os.path.realpath(__file__)))
 
-from .customargparse import flatten_keys, args_to_dict
+from pretrain.customargparse import flatten_keys, args_to_dict
 from fetch_mapping import fetch_mapping
 
 # Ref.: https://stackoverflow.com/a/34997118
