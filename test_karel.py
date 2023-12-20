@@ -32,14 +32,34 @@ def get_reward(program_text, mdp_config):
     return reward
 
 def main():
-    program_text = 'DEF run m( IFELSE c( frontIsClear c) i( move turnRight i) ELSE e( WHILE c( rightIsClear c) w( pickMarker w) e) IF c( frontIsClear c) i( move putMarker i) m)'
-    seed = 100
-    task = 'topOff'
-    mdp_config = get_karel_task_config(task, seed)
+    tests = {
+        'cleanHouse': [
+            'DEF run m( move turnRight WHILE c( frontIsClear c) w( pickMarker move w) m)'
+        ],
+        'fourCorners': [
+            'DEF run m( IF c( markersPresent c) i( move i) WHILE c( frontIsClear c) w( turnLeft w) turnRight putMarker move putMarker m)'
+        ],
+        'harvester': [
+            'DEF run m( WHILE c( leftIsClear c) w( pickMarker move move turnRight w) m)'
+        ],
+        'randomMaze': [
+            'DEF run m( WHILE c( noMarkersPresent c) w( WHILE c( not c( markersPresent c) c) w( turnRight move w) w) m)'
+        ],
+        'stairClimber': [
+            'DEF run m( WHILE c( noMarkersPresent c) w( turnRight move w) IF c( rightIsClear c) i( WHILE c( frontIsClear c) w( move w) i) m)'
+        ],
+        'topOff': [
+            'DEF run m( WHILE c( noMarkersPresent c) w( move w) putMarker move move move WHILE c( frontIsClear c) w( move w) m)'
+        ],
+    }
+    seed = 28236
+    for task in tests:
+        mdp_config = get_karel_task_config(task, seed, num_demo_per_program=100)
+        for program_text in tests[task]:
 
-    reward = main(program_text, mdp_config)
+            reward = get_reward(program_text, mdp_config)
 
-    print(reward)
+            print(task, reward, program_text)
 
 
 if __name__ == '__main__':

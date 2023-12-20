@@ -17,7 +17,7 @@ class obj(object):
 def dict2obj(d):
     return json.loads(json.dumps(d), object_hook=obj)
 
-def get_karel_task_config(karel_task: str, seed: int):
+def get_karel_task_config(karel_task: str, seed: int, num_demo_per_program=None):
     if karel_task == 'cleanHouse':
         from pretrain.leaps_cleanhouse import config
     elif karel_task == 'harvester':
@@ -33,6 +33,8 @@ def get_karel_task_config(karel_task: str, seed: int):
     
     flattened_config = {key: value for key, value in flatten_keys(config)}
     flattened_config['seed'] = seed
+    if num_demo_per_program:
+        flattened_config['num_demo_per_program'] = num_demo_per_program
     # print(flattened_config)
     flattened_config_obj = dict2obj(flattened_config)
 
