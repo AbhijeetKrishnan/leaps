@@ -13,7 +13,7 @@ sys.path.insert(0, '.')
 from prl_gym.exec_env import ExecEnv2
 from pretrain.get_karel_config import get_karel_task_config
 
-datadir = os.path.join('data', 'karel_dataset')
+datadir = sys.argv[1]
 hdf5_file = h5py.File(os.path.join(datadir, 'data.hdf5'), 'r')
 with open(os.path.join(datadir, 'id.txt'), 'r') as id_file:
     id_list = id_file.readlines()
@@ -37,9 +37,10 @@ tasks = ('cleanHouse', 'harvester', 'fourCorners', 'randomMaze', 'stairClimber',
 seed = 75092
 
 def find_task_rewards(task):
+    mdp_config = get_karel_task_config(task, seed, num_demo_per_program=10)
     rewards = []
     for prog in prog_list[:LIMIT]:
-        reward = get_reward(prog, seed, task)
+        reward = get_reward(prog, mdp_config)
         rewards.append(reward) 
     return rewards
 
@@ -56,4 +57,4 @@ df = pd.DataFrame({
     **{f'{task}_reward': rewards[task] for task in tasks}
 })
 
-df.to_csv('leaps_data_2.csv', index_label='indices')
+df.to_csv(sys.argv[2], index_label='indices')
