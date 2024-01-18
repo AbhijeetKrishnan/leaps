@@ -12,6 +12,9 @@ from pretrain.get_karel_config import get_karel_task_config
 from prl_gym.exec_env import ExecEnv2
 from rl.envs import make_vec_envs
 
+# Max length of program in the LEAPS dataset is 50
+MAX_LEN = 50
+
 
 def get_reward(program_text, mdp_config):
     program = program_text.replace("\\", "").replace("'", "")
@@ -38,10 +41,8 @@ def get_reward(program_text, mdp_config):
     )
     test_env.reset()
 
-    program_seq = ExecEnv2(mdp_config["args"]).dsl.str2intseq(program)[
-        1 : mdp_config["max_program_len"] + 1
-    ]
-    program_seq += [50] * (mdp_config["max_program_len"] - len(program_seq))
+    program_seq = ExecEnv2(mdp_config["args"]).dsl.str2intseq(program)[1 : MAX_LEN + 1]
+    program_seq += [MAX_LEN] * (MAX_LEN - len(program_seq))
     program_tensor = torch.tensor(
         program_seq, dtype=torch.int8, device=mdp_config["device"]
     ).unsqueeze(0)
@@ -54,11 +55,7 @@ def get_reward(program_text, mdp_config):
 def main():
     tests = {
         "cleanHouse": [
-            "DEF run m( IF c( rightIsClear c) i( putMarker pickMarker i) move turnRight WHILE c( leftIsClear c) w( pickMarker move w) WHILE c( noMarkersPresent c) w( turnRight move w) pickMarker turnRight move WHILE c( noMarkersPresent c) w( turnRight move w) pickMarker move turnRight pickMarker move m)",
-            "DEF run m( turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight m)",
-            "DEF run m( turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight m)",
-            "DEF run m( turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight m)",
-            "DEF run m( turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight m)"
+            "DEF run m( IFELSE c( markersPresent c) i( IFELSE c( frontIsClear c) i( move i) ELSE e( move e) i) ELSE e( move putMarker e) IFELSE c( frontIsClear c) i( pickMarker i) ELSE e( turnRight e) IF c( not c( noMarkersPresent c) c) i( turnLeft i) m)",
         ],
         "fourCorners": [
             "DEF run m( IF c( markersPresent c) i( move i) WHILE c( frontIsClear c) w( turnLeft w) turnRight putMarker move putMarker m)"
@@ -74,12 +71,12 @@ def main():
         ],
         "topOff": [
             "DEF run m( WHILE c( noMarkersPresent c) w( move w) putMarker move turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight WHILE c( noMarkersPresent c) w( move w) turnRight turnRight turnRight turnRight putMarker turnRight m)",
-            "DEF run m( WHILE c( not c( markersPresent c) c) w( move w) putMarker move WHILE c( not c( markersPresent c) c) w( move w) putMarker move WHILE c( not c( markersPresent c) c) w( move w) turnRight move turnRight putMarker turnRight move turnRight turnRight m)"
+            "DEF run m( WHILE c( not c( markersPresent c) c) w( move w) putMarker move WHILE c( not c( markersPresent c) c) w( move w) putMarker move WHILE c( not c( markersPresent c) c) w( move w) turnRight move turnRight putMarker turnRight move turnRight turnRight m)",
         ],
     }
-    seed = 28236
+    seed = 75092  # 28236
     for task in tests:
-        mdp_config = get_karel_task_config(task, seed, num_demo_per_program=100)
+        mdp_config = get_karel_task_config(task, seed, num_demo_per_program=10)
         for program_text in tests[task]:
             reward = get_reward(program_text, mdp_config)
 
