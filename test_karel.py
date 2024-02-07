@@ -55,26 +55,25 @@ def get_reward(program_text, mdp_config):
 def main():
     tests = {
         "cleanHouse": [
-            "DEF run m( IFELSE c( markersPresent c) i( IFELSE c( frontIsClear c) i( move i) ELSE e( move e) i) ELSE e( move putMarker e) IFELSE c( frontIsClear c) i( pickMarker i) ELSE e( turnRight e) IF c( not c( noMarkersPresent c) c) i( turnLeft i) m)",
+            "DEF run m( move turnLeft move WHILE c( frontIsClear c) w( move pickMarker w) m)",
         ],
         "fourCorners": [
-            "DEF run m( IF c( markersPresent c) i( move i) WHILE c( frontIsClear c) w( turnLeft w) turnRight putMarker move putMarker m)"
+            "DEF run m( WHILE c( leftIsClear c) w( IFELSE c( frontIsClear c) i( IF c( leftIsClear c) i( move i) i) ELSE e( turnLeft putMarker e) w) m)"
         ],
         "harvester": [
-            "DEF run m( turnRight turnRight turnRight turnRight pickMarker move turnLeft pickMarker move pickMarker move pickMarker move pickMarker move pickMarker move turnRight pickMarker move pickMarker move pickMarker move pickMarker move turnRight pickMarker move pickMarker move pickMarker move pickMarker move turnRight pickMarker move pickMarker move pickMarker move m)"
+            "DEF run m( WHILE c( frontIsClear c) w( turnLeft move move pickMarker w) m)"
         ],
         "randomMaze": [
-            "DEF run m( WHILE c( noMarkersPresent c) w( WHILE c( not c( markersPresent c) c) w( turnRight move w) w) m)"
+            "DEF run m( turnRight turnRight move move WHILE c( noMarkersPresent c) w( move turnRight w) m)"
         ],
         "stairClimber": [
-            "DEF run m( WHILE c( noMarkersPresent c) w( turnRight move w) IF c( rightIsClear c) i( WHILE c( frontIsClear c) w( move w) i) m)"
+            "DEF run m( IF c( frontIsClear c) i( pickMarker turnLeft i) WHILE c( noMarkersPresent c) w( turnRight move w) m)"
         ],
         "topOff": [
-            "DEF run m( WHILE c( noMarkersPresent c) w( move w) putMarker move turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight turnRight WHILE c( noMarkersPresent c) w( move w) turnRight turnRight turnRight turnRight putMarker turnRight m)",
-            "DEF run m( WHILE c( not c( markersPresent c) c) w( move w) putMarker move WHILE c( not c( markersPresent c) c) w( move w) putMarker move WHILE c( not c( markersPresent c) c) w( move w) turnRight move turnRight putMarker turnRight move turnRight turnRight m)",
+            "DEF run m( move IF c( not c( leftIsClear c) c) i( IFELSE c( leftIsClear c) i( move i) ELSE e( move e) i) WHILE c( frontIsClear c) w( move w) m)",
         ],
     }
-    seed = 75092  # 28236
+    seed = 28236
     for task in tests:
         mdp_config = get_karel_task_config(task, seed, num_demo_per_program=10)
         for program_text in tests[task]:
