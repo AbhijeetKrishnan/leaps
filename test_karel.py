@@ -55,27 +55,27 @@ def get_reward(program_text, mdp_config):
 def main():
     tests = {
         "cleanHouse": [
-            "DEF run m( move turnLeft move WHILE c( frontIsClear c) w( move pickMarker w) m)",
+            "DEF run m( move turnRight move WHILE c( leftIsClear c) w( pickMarker move w) m)",
         ],
         "fourCorners": [
-            "DEF run m( WHILE c( leftIsClear c) w( IFELSE c( frontIsClear c) i( IF c( leftIsClear c) i( move i) i) ELSE e( turnLeft putMarker e) w) m)"
+            "DEF run m( IF c( frontIsClear c) i( WHILE c( frontIsClear c) w( move w) i) putMarker m)"
         ],
         "harvester": [
-            "DEF run m( WHILE c( frontIsClear c) w( turnLeft move move pickMarker w) m)"
+            "DEF run m( WHILE c( leftIsClear c) w( move move pickMarker turnRight w) m)"
         ],
         "randomMaze": [
-            "DEF run m( turnRight turnRight move move WHILE c( noMarkersPresent c) w( move turnRight w) m)"
+            "DEF run m( REPEAT R=4 r( turnRight turnLeft r) WHILE c( noMarkersPresent c) w( move turnRight w) m)"
         ],
         "stairClimber": [
-            "DEF run m( IF c( frontIsClear c) i( pickMarker turnLeft i) WHILE c( noMarkersPresent c) w( turnRight move w) m)"
+            "DEF run m( IF c( leftIsClear c) i( WHILE c( not c( markersPresent c) c) w( turnRight move w) i) m)"
         ],
         "topOff": [
-            "DEF run m( move IF c( not c( leftIsClear c) c) i( IFELSE c( leftIsClear c) i( move i) ELSE e( move e) i) WHILE c( frontIsClear c) w( move w) m)",
+            "DEF run m( WHILE c( leftIsClear c) w( IFELSE c( markersPresent c) i( putMarker move i) ELSE e( move move e) w) m)",
         ],
     }
     seed = 28236
     for task in tests:
-        mdp_config = get_karel_task_config(task, seed, num_demo_per_program=10)
+        mdp_config = get_karel_task_config(task, seed, num_demo_per_program=100)
         for program_text in tests[task]:
             reward = get_reward(program_text, mdp_config)
 
